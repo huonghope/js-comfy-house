@@ -39,6 +39,15 @@ class Products{
 
 // dislay products
 class UI{
+    setupAPP(){
+        cart = Storage.getCart();
+        if(!cart) return;
+        this.setCartValues(cart);
+        this.populate(cart);
+        cartBtn.addEventListener('click', this.showCart);
+        closeBtn.addEventListener('click',this.hideCart)
+    }
+
     displayProducts(products){
         let result = '';
         products.forEach(product => {
@@ -74,7 +83,7 @@ class UI{
                 button.addEventListener('click', (event) => {
                     event.target.innerHTML = "In Cart";
                     event.target.disabled = true;
-                    // get product from products
+                    // get product from products default click amount 1 product
                     let cartItem = {...Storage.getProduct(id), amount : 1 };
                     // add product to the cart
                     cart = [ ...cart , cartItem];
@@ -82,6 +91,10 @@ class UI{
                     Storage.saveCart(cart);
                     //set cart values
                     this.setCartValues(cart);
+                    // display cart item
+                    this.addCartItem(cartItem);
+                    // show the cart
+                    this.showCart();
                 })
             }
         })
@@ -89,7 +102,51 @@ class UI{
     setCartValues(cart){
         let tempTotal = 0;
         let itemsTotal = 0;
+        cart.map(item => {
+            tempTotal += item.price * item.amount;
+            itemsTotal += item.amount;
+        })
+        //set quickly see UI
+        cartTotal.innerText = parseFloat(tempTotal.toFixed(2))
+        cartItems.innerText = parseInt(itemsTotal);
     }
+    //create cart item to cart-overlay
+    addCartItem(cartItem)
+    {
+        const div = document.createElement('div');
+        div.classList.add('cart-item');
+        div.innerHTML = `
+            <img src=${cartItem.image} alt="product" srcset="">
+            <div>
+                <h4>${cartItem.title}</h4>
+                <h5>$${cartItem.price}</h5>
+                <span class="remove-item" data-id=${cartItem.id}>remove</span>
+            </div>
+            <div>   
+                <i class="fa fa-chevron-up" data-id=${cartItem.id}></i>
+                <p class="item-amount">${cartItem.amount}</p>
+                <i class="fa fa-chevron-down" data-id=${cartItem.id}></i>
+            </div>
+        `;
+        //add single cart content to cartContent
+        cartContent.appendChild(div)
+    }
+    // show cart content DOM
+    showCart(){
+        cartOverlay.classList.add('transparentBcg')
+        cartDOM.classList.add('showCart')
+    }
+    hideCart(){
+        cartOverlay.classList.remove('transparentBcg')
+        cartDOM.classList.remove('showCart')
+    }
+    populate(cart){
+        cart.forEach(item => this.addCartItem(item));
+    }
+    cartLogin(){
+        
+    }
+
 }
 
 //local storage
@@ -105,6 +162,9 @@ class Storage{
         if(!cart) return;
         localStorage.setItem('cart', JSON.stringify(cart))
     }
+    static getCart(){
+        return localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')): []; 
+    }
 }
 
 //list event loaded UI and update UI
@@ -113,6 +173,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const products = new Products();
     // const storage = new Storage()
     
+    ui.setupAPP();
     // get all products
     products.getProducts().
         then(products => {
