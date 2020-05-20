@@ -22,19 +22,37 @@ body {
 }
 /* --------------- Navbar ---------------- */
 .navbar {
+  /*
+  - Dữ cho luôn nổi lên trên
+  */
   position: sticky;
   top: 0;
+  
   height: 60px;
   width: 100%;
+  
+  /*
+  - Chỉnh căn giữa theo chiều cao
+  */
   display: flex;
   align-items: center;
+
   background: rgb(231, 226, 221);
   z-index: 1;
 }
 .navbar-center {
-  width: 100%;
+  /*
+  Dùng thủ thuật chỉnh max => Rồ căn giữa cái max-width
+  Dùng margin để căn giữa div center
+  */
   max-width: 1170px; 
+  width: 100%;
   margin: 0 auto;
+
+  /*
+  Dùng display để chỉnh 1 hàng 
+  Dùng space-between để san sang 2 bên
+  */
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -59,25 +77,40 @@ body {
 /* --------------- End of Navbar ---------------- */
 /* --------------- Hero ---------------- */
 .hero {
+  /*
+	- Lấy tổng màn hình trừ đi header
+	*/
   min-height: calc(100vh - 60px);
   background: url("./images/hero-bcg.jpeg") center/cover no-repeat;
+  /*
+  - Điều chỉnh div bên trong ra giữa
+  */
   display: flex;
   align-items: center;
   justify-content: center;
 }
 .banner {
+  /*
+  - Điều chỉnh text ra center
+  */
   text-align: center;
   background: rgba(255, 255, 255, 0.8);
   display: inline-block;
 	padding: 2rem;
 }
 .banner-title {
+  /*
+  - Chỉnh font text và margin-top
+  */
   font-size: 3.4rem;
   text-transform: uppercase;
   letter-spacing: var(--mainSpacing);
   margin-bottom: 3rem;
 }
 .banner-btn {
+  /*
+  - Điều chỉnh button bên trog banner
+  */
   padding: 1rem 3rem;
   text-transform: uppercase;
   letter-spacing: var(--mainSpacing);
@@ -89,6 +122,9 @@ body {
   cursor: pointer;
 }
 .banner-btn:hover {
+  /*
+  - Điều chỉnh hiệu ứng hover
+  */
   background: transparent;
   color: var(--primaryColor);
 }
@@ -105,29 +141,56 @@ body {
   letter-spacing: var(--mainSpacing);
 }
 .products-center {
+  /*
+  - Chỉnh width để covert khi kéo màn hình vào
+  - Dùng max-width để default width ban đầu hay màn hình to
+  */
   width: 90vw;
-  margin: 0 auto;
   max-width: 1170px;
+  margin: 0 auto;
+
+  /*
+  - Dùng display grid để chỉnh bối cảnh cho từng phần
+  */
   display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  /*
+  - Mỗi cột cách 1.5rem
+  - Mỗi hàng cách 2rem
+  */
   grid-column-gap: 1.5rem;
 	grid-row-gap: 2rem;
 }
 .img-container {
+  /*
+  - Điều chỉnh container ảnh bên trong với overfow để điều chỉnh k bị tràn dữ liệu
+  */
   position: relative;
   overflow: hidden; 
 }
 .bag-btn {
+  /*
+  - Chỉnh botton/ default ẩn
+  */
   position: absolute;
   top: 70%;
   right: 0;
+
+  /*
+  - Chỉnh background font và border 
+  */
   background: var(--primaryColor);
+  padding: 0.5rem 0.75rem;
   border: none;
   text-transform: uppercase;
-  padding: 0.5rem 0.75rem;
   letter-spacing: var(--mainSpacing);
   font-weight: bold;
+
   transition: var(--mainTransition);
+  /*
+  - Đi sang bên phải theo chiều X
+  - Quá 1% để k nhìn thấy hoàn toàn
+  */
   transform: translateX(101%);
   cursor: pointer;
 }
@@ -141,15 +204,28 @@ body {
   transform: translateX(0);
 }
 .product-img {
+  /*
+  - Chỉnh width : 100% để nhìn thấy hết ảnh
+  */
   display: block;
   width: 100%;
+
+  /*
+  - Chỉnh min-height: để default hight cho anh;
+  */
   min-height: 12rem;
   transition: var(--mainTransition);
 }
+  /*
+  - hover để làm mờ ảnh
+  */
 .img-container:hover .product-img {
   opacity: 0.5;
 }
 
+/*
+  - Chỉnh các text bên dưới
+*/
 .product h3 {
   text-transform: capitalize;
   font-size: 1.1rem;
@@ -167,18 +243,29 @@ body {
 /* --------------- End of Product ---------------- */
 /* --------------- Cart ---------------- */
 .cart-overlay{
+  /*
+  - Dùng fixder và top 0 để bo toàn màn hình cũng như là giữ nguyên đi kéo scroll
+  - Dùng width và height để bôi ra toàn màn hình
+  */
 	position: fixed;
 	top: 0;
 	right: 0;
 	width: 100%;
-	height: 100%;
-	background: transparent;
+  height: 100%;
+  
+  /*
+  - Dùng transition + background để bôi màu + index để hiện lên đầu
+  */
 	transition: var(--mainTransition);
 	background: rgb(240, 157, 81, 0.5);
 	z-index: 2;
 	visibility: hidden;
 }
 .cart{
+  /*
+    Tạo ra lớp thứ 2, trên tầng main
+    Main phụ ẩn sang bên phái 100%
+  */
 	position: fixed;
 	top: 0;
 	right: 0;
@@ -187,7 +274,11 @@ body {
 	overflow: scroll;
 	z-index: 3;
 	background: rgb(231, 226, 221);
-	padding: 1.5rem;
+  padding: 1.5rem;
+  
+  /*
+  - Sau ngược lại để dấu cart đi
+  */
 	transition: var(--mainTransition);
 	transform: translateX(100%);
 }
@@ -198,6 +289,10 @@ body {
 	visibility: visible;
 }
 @media screen and (min-width: 768px) {
+  /*
+  - Căn lại nền cart, chiếm 1/3 màn hình 
+  - Dùng min-width để điều chình khi xuống nhỏ trang
+  */
   .cart {
     width: 30vw;
 		min-width: 450px;
@@ -208,6 +303,10 @@ body {
 	cursor: pointer;
 }
 .cart h2{
+  /*
+  - Chỉnh font-size và khoảng cách chữ
+  - Thêm margin-bottom
+  */
 	text-transform: capitalize;
 	text-align: center;
 	letter-spacing: var(--mainSpacing);

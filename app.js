@@ -26,13 +26,15 @@ let cart = [];
 class Products{
     async getProducts(){
         try {
-            let content = await client.getEntries({
-                content_type: 'comfyHouseProduct'
-            });
-            console.log(content)
-            // let result = await fetch('products.json');
-            // let data = await result.json();
-            let products = content.items;
+            // let content = await client.getEntries({
+            //     content_type: 'comfyHouseProduct'
+            // });
+            // console.log(content)
+            let result = await fetch('products.json');
+            let data = await result.json();
+            // let products = content.items;
+            let products = data.items;
+            console.log(products)
             // recovert products data
             products = products.map(item => {
                 const {title, price} = item.fields;
